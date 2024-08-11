@@ -1,23 +1,28 @@
 import streamlit as st
 import functions
 
-todos = functions.get_todos("todos.txt")
-todos_completed = functions.get_todos("todos_completed.txt")
+st.set_page_config(
+    page_title="Shopping List",
+    page_icon="🛒",
+)
+
+todos = functions.get_todos("store/todos.txt")
+todos_completed = functions.get_todos("store/todos_completed.txt")
 
 
 def add_todo():
     new_todo = st.session_state["new_todo"] + "\n"
     if new_todo:
         todos.append(new_todo)
-        functions.write_todos(todos, "todos.txt")
+        functions.write_todos(todos, "store/todos.txt")
         st.session_state["new_todo"] = ""   # clear the input field
 
 
 def delete_todos():
     st.session_state.todos = []
     st.session_state.todos_completed = []
-    functions.write_todos(st.session_state.todos, "todos.txt")
-    functions.write_todos(st.session_state.todos_completed, "todos_completed.txt")
+    functions.write_todos(st.session_state.todos, "store/todos.txt")
+    functions.write_todos(st.session_state.todos_completed, "store/todos_completed.txt")
     st.toast("Your shopping list is cleared!")
 
 
@@ -31,8 +36,8 @@ if todos:
         if checkbox:
             completed = todos.pop(index)
             todos_completed.append(completed)
-            functions.write_todos(todos, "todos.txt")
-            functions.write_todos(todos_completed, "todos_completed.txt")
+            functions.write_todos(todos, "store/todos.txt")
+            functions.write_todos(todos_completed, "store/todos_completed.txt")
             # Reinitialize state after updating
             st.session_state.todos = todos
             st.session_state.todos_completed = todos_completed
@@ -53,8 +58,8 @@ if todos_completed:
         if checkbox is False:
             uncompleted = todos_completed.pop(index)
             todos.append(uncompleted)
-            functions.write_todos(todos, "todos.txt")
-            functions.write_todos(todos_completed, "todos_completed.txt")
+            functions.write_todos(todos, "store/todos.txt")
+            functions.write_todos(todos_completed, "store/todos_completed.txt")
             # Reinitialize state after updating
             st.session_state.todos = todos
             st.session_state.todos_completed = todos_completed
