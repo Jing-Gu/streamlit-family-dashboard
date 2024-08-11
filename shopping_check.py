@@ -55,7 +55,9 @@ if todos_completed:
             todos.append(uncompleted)
             functions.write_todos(todos, "todos.txt")
             functions.write_todos(todos_completed, "todos_completed.txt")
-            del st.session_state[todo_c]
+            # Reinitialize state after updating
+            st.session_state.todos = todos
+            st.session_state.todos_completed = todos_completed
             st.rerun()
 
 
