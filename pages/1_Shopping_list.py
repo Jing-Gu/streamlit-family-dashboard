@@ -45,7 +45,7 @@ if todos:
 else:
     st.write("Your shopping list is empty. 🤷")
 
-st.text_input(label="", placeholder="Something to buy?",
+st.text_input(label="Add new item", label_visibility="hidden", placeholder="Something to buy?",
               on_change=add_todo, key="new_todo")
 
 if todos or todos_completed:
